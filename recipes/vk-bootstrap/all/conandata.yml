@@ -1,10 +1,10 @@
 sources:
-  "1.4.335":
-    url: "https://github.com/charles-lunarg/vk-bootstrap/archive/refs/tags/v1.4.335.tar.gz"
-    sha256: "3c34b9a0bda7b9f7a8fe25935539679cf3cdae0c4016da3ea918077ef5a26c99"
+  "1.4.341":
+    url: "https://github.com/charles-lunarg/vk-bootstrap/archive/refs/tags/v1.4.341.tar.gz"
+    sha256: "c6fcf8befc62bcf7ec4d847cec093522bb470dad15f07218c3102ed892777dc5"
   "1.3.296":
     url: "https://github.com/charles-lunarg/vk-bootstrap/archive/refs/tags/v1.3.296.tar.gz"
     sha256: "fbff2746134459648a488588a71609d11e6e00f591ac4a3cc6683a131bf31a53"
 vulkan_headers_dependency:
-  "1.4.335": "1.4.335.0"
+  "1.4.341": "1.4.341.0"
   "1.3.296": "1.3.296.0"
