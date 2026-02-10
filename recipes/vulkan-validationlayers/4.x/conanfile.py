@@ -53,10 +53,10 @@ class VulkanValidationLayersConan(ConanFile):
 
     def requirements(self):
         self.requires("robin-hood-hashing/3.11.5")
-        self.requires("spirv-headers/1.4.335.0")
-        self.requires("spirv-tools/1.4.335.0")
-        self.requires("vulkan-headers/1.4.335.0", transitive_headers=True)
-        self.requires("vulkan-utility-libraries/1.4.335.0")
+        self.requires("spirv-headers/1.4.341.0")
+        self.requires("spirv-tools/1.4.341.0")
+        self.requires("vulkan-headers/1.4.341.0", transitive_headers=True)
+        self.requires("vulkan-utility-libraries/1.4.341.0")
 
         if self.options.get_safe("with_wsi_xcb") or self.options.get_safe("with_wsi_xlib"):
             self.requires("xorg/system")
