@@ -7,7 +7,7 @@ from conan.tools.meson import Meson, MesonToolchain
 import os
 
 
-required_conan_version = ">=2.1"
+required_conan_version = ">=2.4"
 
 
 class Pipewire(ConanFile):
@@ -28,7 +28,7 @@ class Pipewire(ConanFile):
         "shared": False,
         "fPIC": True
     }
-
+    languages = "C"
     implements = ["auto_shared_fpic"]
 
     def layout(self):
@@ -48,6 +48,8 @@ class Pipewire(ConanFile):
 
     def source(self):
         get(self, **self.conan_data["sources"][self.version], strip_root=True)
+        replace_in_file(self, os.path.join(self.source_folder, "spa", "meson.build"), "subdir('tests')", "")
+        replace_in_file(self, os.path.join(self.source_folder, "spa", "meson.build"), "subdir('examples')", "")
 
     def generate(self):
         tc = MesonToolchain(self)
@@ -93,6 +95,7 @@ class Pipewire(ConanFile):
         tc.project_options["raop"] = "disabled"
         tc.project_options["roc"] = "disabled"
         tc.project_options["sdl2"] = "disabled"
+        tc.project_options["selinux"] = "disabled"
         tc.project_options["sndfile"] = "disabled"
         tc.project_options["spa-plugins"] = "enabled"
         tc.project_options["support"] = "enabled"
@@ -136,10 +139,14 @@ class Pipewire(ConanFile):
         self.cpp_info.components["pipewire"].libs = ["pipewire-0.3"]
         self.cpp_info.components["pipewire"].includedirs = [os.path.join("include", "pipewire-0.3")]
         self.cpp_info.components["pipewire"].requires = ["glib::glib", "spa"]
+        self.cpp_info.components["pipewire"].set_property("pkg_config_name", "libpipewire-0.3")
+        self.cpp_info.components["pipewire"].set_property("pkg_config_custom_content", {"moduledir": "${libdir}/pipewire-0.3"})
 
         self.cpp_info.components["spa"].libs = ["spa"]
         self.cpp_info.components["spa"].libdirs = [os.path.join("lib", "spa-0.2")]
         self.cpp_info.components["spa"].includedirs = [os.path.join("include", "spa-0.2")]
+        self.cpp_info.set_property("pkg_config_name", "libspa-0.2.pc")
+        self.cpp_info.set_property("pkg_config_custom_content", {"plugindir": "${libdir}/spa-0.2"})
 
-        if self.settings.os in ["Linux", "FreeBSD"]:
-            self.cpp_info.system_libs.extend(["m", "pthread", "dl"])
+        self.cpp_info.components["pipewire"].system_libs.extend(["m", "pthread", "dl"])
+        self.cpp_info.components["spa"].system_libs.extend(["m", "pthread", "dl"])
