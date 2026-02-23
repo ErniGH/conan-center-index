@@ -128,6 +128,7 @@ class Pipewire(ConanFile):
 
     def package(self):
         copy(self, "LICENSE", self.source_folder, os.path.join(self.package_folder, "licenses"))
+        copy(self, "COPYING", self.source_folder, os.path.join(self.package_folder, "licenses"))
         meson = Meson(self)
         meson.install()
 
